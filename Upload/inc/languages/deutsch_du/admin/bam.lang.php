@@ -11,7 +11,7 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
     Übersetzung für BAM+/2.0 Announcements Manager -Darth Apple <http://www.makestation.net/>:
     Deutsch_du von Tc4me <htpps://autism4all.at/>
 --------------------------------------------------------------------------------*/
@@ -20,9 +20,9 @@ $l['bam_title'] = 'Board-Ankündigungs-Manager';
 $l['bam_title_acronym'] = 'Board-Ankündigungs-Manager';
 $l['bam_desc'] = 'Erlaubt das erstellen von Ankündigungen unter dem Forum Header.';
 $l['bam_announcements_menu'] = 'Board-Ankündigungs-Manager';
-$l['bam_enable'] = 'Ankündigungs-Manager aktivieren/deaktivieren?';
-$l['bam_enable_desc'] = 'Hier kann der Bam-Ankündigungsmanager eingeschaltet/ausgeschaltet werden ohne das Plugin zu deinstallieren.';
-$l['bam_random_enable'] = 'Zufallsmodus';
+$l['bam_enabled'] = 'Ankündigungs-Manager aktivieren/deaktivieren?';
+$l['bam_enabled_desc'] = 'Hier kann der Bam-Ankündigungsmanager eingeschaltet/ausgeschaltet werden ohne das Plugin zu deinstallieren.';
+$l['bam_random'] = 'Zufallsmodus';
 $l['bam_random_desc'] = 'Wenn diese Einstellung aktiv ist, wird BAM alle verfügbaren Ankündigungen in zufälliger Reihenfolge anzeigen. Diese Einstellung ist standardmäßig deaktiviert.';
 $l['bam_random_max'] = 'Zufallsergebnisse die erzeugt werden';
 $l['bam_random_max_desc'] = 'Maximale Anzahl der Ankündigungen die zufällig angezeigt werden sollen. Diese Einstellung bewirkt nichts wenn der Zufallsmodus deaktiviert ist.';
@@ -39,14 +39,14 @@ $l['bam_custom_css'] = 'Benutzerdefiniertes CSS';
 $l['bam_custom_css_desc'] = 'Benutzerdefiniertes CSS hier einfügen.';
 $l['bam_welcome'] = '[b]BAM wurde erfolgreich installiert![/b] Ankündigungen können nun im ACP verwaltet werden.';
 $l['bam_date_enable'] = 'Veröffentlichungsdatum anzeigen?';
-$l['bam_date_desc'] = 'Wenn eingeschaltet wird das Veröffentlichungsdatum in der Ankündigung angezeigt.';
+$l['bam_date_enable_desc'] = 'Wenn eingeschaltet wird das Veröffentlichungsdatum in der Ankündigung angezeigt.';
 $l['bam_settings_link'] = 'Klicke hier, um die allgemeinen Plugin-Einstellungen von BAM anzuzeigen';
 $l['bam_slidedown_enable'] = "Slidedown-Effekt aktivieren?";
 $l['bam_slidedown_enable_desc'] = 'Wenn diese Option aktiviert ist, werden Ankündigungen beim Laden einer neuen Seite nach unten verschoben. Beachte, dass diese Einstellung dem Browser Zeit gibt, gelöschte Ankündigungen zu entfernen, bevor sie angezeigt werden. Wenn diese Einstellung deaktiviert ist, blinken diese Ansagen möglicherweise kurz auf dem Bildschirm.';
-// 2.0 
+// 2.0
 
-$l['bam_round'] = "Verwenden von weichen Rändern für Ankündigungen?";
-$l['bam_round_desc'] = "Weiche Ränder verleihen der Ankündigung ein abgerundetes Erscheinungsbild. Ist es deaktiviert, verwendet die BAM den selben Stil wie im MyBB-Supportforum. ";
+$l['bam_round_announcements'] = "Verwenden von weichen Rändern für Ankündigungen?";
+$l['bam_round_announcements_desc'] = "Weiche Ränder verleihen der Ankündigung ein abgerundetes Erscheinungsbild. Ist es deaktiviert, verwendet die BAM den selben Stil wie im MyBB-Supportforum. ";
 
 $l['bam_enable_dismissal'] = "Ankündigung gelesen: ";
 $l['bam_enable_dismissal_desc'] = "Festlegen, wie BAM mit gelesenen Ankündigungen umgehen soll. Wenn \"Nur schließen\" eingestellt ist, werden Ankündigungen immer wieder angezeigt. \"Schließen und beenden\" verhindert, dass die Ansage erneut angezeigt wird. ";
@@ -120,7 +120,7 @@ $l['bam_yellow'] = 'Gelb';
 $l['bam_orange'] = 'Orange';
 $l['bam_red'] = 'Rot';
 $l['bam_silver'] = 'Silver';
-$l['bam_magenta'] = "Magenta"; 
+$l['bam_magenta'] = "Magenta";
 $l['bam_custom'] = 'Benutzerdefiniert (Nachfolgend definieren)';
 
 $l['bam_form_style'] = 'Style/Class:';
@@ -128,7 +128,7 @@ $l['bam_form_style_desc'] = 'color/class Style für Ankündigung auswählen.';
 $l['bam_form_class_custom'] = 'Benutzerdefiniertes CSS:';
 $l['bam_form_class_custom_desc'] = "Gib benutzerdefinierte CSS-Klassen ein, die anstelle der in BAM integrierten Stile verwendet werden sollen (Du kannst mehrere Werte durch ein Leerzeichen trennen). <i> Du musst diese Klassen entweder im CSS Deines Themas oder in den Plugin-Einstellungen von BAM definieren. </ i> Einzelheiten in der Dokumentation.";
 
-//Dies wird in Javascript eingegeben. Stelle daher sicher, dass die Zeichenfolge, die generiert wird, keine neuen Zeilen enthält, wenn du dies übersetzt. 
+//Dies wird in Javascript eingegeben. Stelle daher sicher, dass die Zeichenfolge, die generiert wird, keine neuen Zeilen enthält, wenn du dies übersetzt.
 $l['bam_remove_custom_class'] = "<i><font color=\'red\'>Du musst benutzerdefinierte Klassen entfernen, bevor Du einen vordefinierten Farbstil festlegen. ";
 $l['bam_remove_custom_class'] .= "Wenn Du zusätzlich zu einer benutzerdefinierten Klasse einen vordefinierten Farbwert verwenden möchtest , kannst Du beide in die unten stehende benutzerdefinierte Klasseneinstellung aufnehmen. </font>";
 $l['bam_remove_custom_class'] .= "Anweisungen zum Hinzufügen benutzerdefinierter Klassen findest Du in der Dokumentation. </i>";
@@ -227,7 +227,7 @@ Stellesicher, dass BAM aktiviert ist, bevor Du den integrierten Migrator ausfüh
 Ein Upgrade-Link wird unten angezeigt. </b><br /><br />
 <i>(Der Upgrader von BAM wurde speziell für den Betrieb vor Ort entwickelt und läuft, während das Plugin aktiviert ist. Die Ankündigungen für Ihr Forum werden nicht unterbrochen.)</i>";
 
-$l['bam_info_upgrade_ready'] = "<font color='red'><b>Du hast BAM 2.0 auf den Server hochgeladen, aber ein Upgrade ist erforderlich, um Deine Ankündigungen auf die neue Version upgraden. </b>Du kannst den Upgrader unten starten.</font> 
+$l['bam_info_upgrade_ready'] = "<font color='red'><b>Du hast BAM 2.0 auf den Server hochgeladen, aber ein Upgrade ist erforderlich, um Deine Ankündigungen auf die neue Version upgraden. </b>Du kannst den Upgrader unten starten.</font>
 <br /><br />
 <i>(Der Upgrader von BAM wurde speziell für den Betrieb vor Ort entwickelt und läuft, während das Plugin aktiviert ist. Die Ankündigungen für Dein Forum werden nicht unterbrochen.)</i><br />";
 

@@ -17,9 +17,9 @@ $l['bam_title'] = "BAM Announcements Manager";
 $l['bam_title_acronym'] = "BAM Announcements Manager (Updated and Improved!)";
 $l['bam_desc'] = "Allows you to create and manage announcements in your forum header.";
 $l['bam_announcements_menu'] = "BAM Announcements";
-$l['bam_enable'] = "Activate BAM Announcements Manager?";
-$l['bam_enable_desc'] = "Enable or disable BAM Announcements Manager without the need to uninstall this plugin. ";
-$l['bam_random_enable'] = "Enable/Disable Random Mode";
+$l['bam_enabled'] = "Activate BAM Announcements Manager?";
+$l['bam_enabled_desc'] = "Enable or disable BAM Announcements Manager without the need to uninstall this plugin. ";
+$l['bam_random'] = "Enable/Disable Random Mode";
 $l['bam_random_desc'] = "Enables the <i>random mode</i> tab, along with automatically refreshing announcements. This feature does not affect your standard announcements!";
 $l['bam_random_max'] = "Random Results Generated";
 $l['bam_random_max_desc'] = "Maximum number of random results generated if random mode is enabled. This setting does nothing if random mode is disabled. ";
@@ -36,17 +36,17 @@ $l['bam_custom_css'] = "Custom CSS";
 $l['bam_custom_css_desc'] = "Add any custom CSS classes here. ";
 $l['bam_welcome'] = "[b]BAM 2.1 has successfully been installed![/b] You may now manage your announcements via the ACP. ";
 $l['bam_date_enable'] = "Display Announcement Date?";
-$l['bam_date_desc'] = "If enabled, BAM will display the date posted for announcements. ";
+$l['bam_date_enable_desc'] = "If enabled, BAM will display the date posted for announcements. ";
 $l['bam_settings_link'] = "Click here for BAM's general plugin settings";
 $l['bam_slidedown_enable'] = "Enable Slidedown Effect?";
 $l['bam_slidedown_enable_desc'] = "When enabled, announcements will slide down on a new page load. Note that this setting gives the browser time to remove dismissed announcements before displaying them. If this setting is disabled, these announcements might briefly flash on the screen.";
-// 2.0 
+// 2.0
 
-$l['bam_round'] = "Use Soft Borders for Announcements?";
-$l['bam_round_desc'] = "Soft borders give announcements a rounded appearance. If disabled, BAM will use the same style that is used on the MyBB support forum. ";
+$l['bam_round_announcements'] = "Use Soft Borders for Announcements?";
+$l['bam_round_announcements_desc'] = "Soft borders give announcements a rounded appearance. If disabled, BAM will use the same style that is used on the MyBB support forum. ";
 
 $l['bam_enable_dismissal'] = "Announcement Dismissals: ";
-$l['bam_enable_dismissal_desc'] = "Set how BAM should handle announcement dismissals.  
+$l['bam_enable_dismissal_desc'] = "Set how BAM should handle announcement dismissals.
 If set to \"Close Only,\" announcements will return when the user revisits. \"Close and dismiss\" prevents the announcement from being displayed again. ";
 $l['bam_dismissal_days'] = "Dismissed Announcements Expiration: ";
 $l['bam_dismissal_days_desc'] = "Defines how many days a new BAM announcement dismissal should last. Default value is 30.";
@@ -119,7 +119,7 @@ $l['bam_yellow'] = 'Yellow';
 $l['bam_orange'] = 'Orange';
 $l['bam_red'] = "Red";
 $l['bam_silver'] = 'Silver';
-$l['bam_magenta'] = "Magenta"; 
+$l['bam_magenta'] = "Magenta";
 $l['bam_custom'] = "Custom (Define Below)";
 
 $l['bam_form_style'] = "Style/Color Class: ";
@@ -127,7 +127,7 @@ $l['bam_form_style_desc'] = "Select the color and style for your announcement. "
 $l['bam_form_class_custom'] = "Custom CSS Classes: ";
 $l['bam_form_class_custom_desc'] = "Enter custom CSS classes to be used instead of BAM's built in styles (you can separate multiple values with a space). <i>You must define these classes either in your theme's CSS, or in BAM's plugin settings. </i> See documentation for details.";
 
-// This is entered into javascript, so make sure there are no new lines in the string that is generated if you translate this. 
+// This is entered into javascript, so make sure there are no new lines in the string that is generated if you translate this.
 $l['bam_remove_custom_class'] = "<i><font color=\'red\'>You must remove custom classes before setting a predefined color style. ";
 $l['bam_remove_custom_class'] .= "If you need to use a predefined color value in addition to a custom class, you can add both into the custom class setting below. </font>";
 $l['bam_remove_custom_class'] .= "See documentation for instructions on how to add custom classes. </i>";
@@ -226,24 +226,24 @@ $l['bam_upgrade_success'] = "You have successfully updated BAM to BAM 2! Verify 
 $l['bam_info_alternative_upgrade'] = "<br /><br /><i>You can alternatively uninstall the plugin, and perform a full re-install on this page! Note that this will delete your announcements.</i>";
 
 $l['bam_info_upgrade'] = "<font color='red'><b>You have uploaded BAM 2.0/2.1 to the server, but an upgrade is required to migrate your announcements to the new version. </font>
-Make sure that BAM is activated before running the built-in migrator. Once BAM has been activated, 
+Make sure that BAM is activated before running the built-in migrator. Once BAM has been activated,
 an upgrade link will appear below. </b><br /><br />
 <i>(BAM's upgrader is specifically designed to operate in-place, and runs while the plugin is activated. There will be no interruptions on the announcements for your forum.)</i>";
 
-$l['bam_info_upgrade_ready'] = "<font color='red'><b>You have uploaded BAM 2.0/2.1 to the server, but an upgrade is required to migrate your announcements to the new version.</b> 
-You may launch the upgrader below. </font> 
+$l['bam_info_upgrade_ready'] = "<font color='red'><b>You have uploaded BAM 2.0/2.1 to the server, but an upgrade is required to migrate your announcements to the new version.</b>
+You may launch the upgrader below. </font>
 <br /><br />
 <i>(BAM's upgrader is specifically designed to operate in-place, and runs while the plugin is activated. There will be no interruptions on the announcements for your forum.)</i><br />";
 
 $l['bam_compatibility_mode'] = "Compatibility Mode (Advanced): ";
-$l['bam_compatibility_mode_desc'] = "<b>Leave this setting at its default if unsure. </b>BAM's default template variables and plugin hooks are designed to ensure 
+$l['bam_compatibility_mode_desc'] = "<b>Leave this setting at its default if unsure. </b>BAM's default template variables and plugin hooks are designed to ensure
 the best possible compatibility with the majority of MyBB forums. Occasionally, there will be compatibility issues with
-different plugins, untested versions of PHP, or heavily modified themes. If this setting is enabled, 
-BAM will attempt to render announcements using the \"pre_output_page\" hook instead of the standard global.php hook. 
-It is recommended to leave this setting at its default unless you experience issues. If compatibility issues persist even 
+different plugins, untested versions of PHP, or heavily modified themes. If this setting is enabled,
+BAM will attempt to render announcements using the \"pre_output_page\" hook instead of the standard global.php hook.
+It is recommended to leave this setting at its default unless you experience issues. If compatibility issues persist even
 in compatibility mode, request support on the MyBB community forums.";
 
-$l['bam_compatibility_mode_desc'] = "<b><u>Leave this at its default if unsure.</u></b> If enabled, this setting will force 
+$l['bam_compatibility_mode_desc'] = "<b><u>Leave this at its default if unsure.</u></b> If enabled, this setting will force
 BAM to render announcements when outputting the page, rather than during forum-header generation. This may occasionally resolve
 certain compatibility issues that may occur with untested versions of PHP, conflicting plugins, or highly modified themes. This feature is considered experimental. It is currently recommended to leave this setting off
 unless you experience issues.";
