@@ -260,7 +260,7 @@ function bam_install()
     }
     rebuild_settings();
 
-    bam_build_css_files();
+    bam_build_css_files(true);
 }
 
 function bam_is_installed()
@@ -576,9 +576,17 @@ function compatibility_BAM_announcements_setvariable()
     return;
 }
 
-function bam_build_css_files()
+function bam_build_css_files($initial = false)
 {
-    global $mybb;
+    global $mybb, $db, $gid;
+
+    $query = $db->simple_select('settinggroups', 'gid', "name = 'bam'", array('limit' => 1));
+    $sgroup = (int)$db->fetch_field($query, 'gid');
+
+    if($sgroup != $gid && $initial !== true)
+    {
+        return false;
+    }
 
     $stylesheet = @file_get_contents(__DIR__ . "/bam/bam_default.css");
     if (!$stylesheet)
