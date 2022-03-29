@@ -532,7 +532,6 @@ function bam_announcements($compatibility = null)
     {
         $slidedown = "bam_slidedown";
     }
-    $bam_custom_css = $mybb->settings['bam_custom_css'];
 
     $bam_announcements = ""; // Bug fix for weird servers.
 
@@ -576,7 +575,9 @@ function compatibility_BAM_announcements_setvariable()
 
 function bam_headerincludes()
 {
-    global $stylesheets;
+    global $mybb, $stylesheets;
+
+    $bam_custom_css = trim($mybb->settings['bam_custom_css']);
 
     $add_to_header = '<style type="text/css">
     .bam_announcement.yellow {
@@ -670,7 +671,7 @@ function bam_headerincludes()
         margin-bottom: 10px;
     }
 
-    {$bam_custom_css}
+    ' . $bam_custom_css . '
 </style>
 <script type="text/javascript">
 <!--
