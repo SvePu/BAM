@@ -41,17 +41,17 @@ if (isset($mybb->settings['bam_enabled']) && $mybb->settings['bam_enabled'] == 1
         $plugins->add_hook("global_intermediate", "compatibility_BAM_announcements_setvariable"); // Bug fix for servers that display PHP notices.
         $plugins->add_hook("pre_output_page", "bam_announcements_compatibility");
     }
-
-    $plugins->add_hook("global_intermediate", "bam_headerincludes", 20);
 }
 
 if (defined('IN_ADMINCP'))
 {
     $plugins->add_hook('admin_config_settings_begin', 'bam_settings');
+    $plugins->add_hook('admin_config_settings_change_commit', 'bam_build_css_files');
     $plugins->add_hook("admin_config_menu", "bam_config_menu");
     $plugins->add_hook("admin_config_action_handler", "bam_confighandler");
     $plugins->add_hook("admin_config_permissions", "bam_admin_config_permissions");
 }
+
 
 // BAM is incompatibile with the Google SEO function at this time. A stub function is included
 // if experienced developers would like to help extend BAM's functionality. Uncomment this hook to enable this.
@@ -66,7 +66,7 @@ function bam_info()
     // BAM has an in-place upgrader, which checks whether BAM requires database updates after the new version is uploaded.
     // If we detect that BAM 2.0's files have been uploaded without running the upgrade script yet...
     // ... We display a notice to the administrator, along with a one-click link to run the upgrade.
-    // See /inc/plugins/bam_upgrade/bam_upgrade.php for more information about how this works.
+    // See /inc/plugins/bam/bam_upgrade.php for more information about how this works.
 
     // No need to check if we've upgraded the DB if we're not installed.
     if (bam_is_installed())
@@ -259,6 +259,8 @@ function bam_install()
         ++$disporder;
     }
     rebuild_settings();
+
+    bam_build_css_files();
 }
 
 function bam_is_installed()
@@ -354,10 +356,6 @@ function bam_announcements($compatibility = null)
     require_once MYBB_ROOT . '/inc/class_parser.php';
     $parser = new postParser();
 
-    // Set some variables that we use in the javascript to create the cookies.
-    $bam_cookie_expire_days = (int) $mybb->settings['bam_dismissal_days'];
-    $bam_cookie_path = $mybb->settings['cookiepath'];
-
     // Determine whether BAM's settings allow HTML. New setting in BAM 2.0. Bug fix from BAM 1.
     $allowHTML = 0;
     if ($mybb->settings['bam_advanced_mode'] == 1)
@@ -382,8 +380,8 @@ function bam_announcements($compatibility = null)
         SELECT *
         FROM " . TABLE_PREFIX . "bam
         WHERE `active` = 1
-        ORDER BY pinned DESC, PID ASC");
-
+        ORDER BY pinned DESC, PID ASC
+    ");
 
     $data = array();
     $count = 0;
@@ -525,17 +523,22 @@ function bam_announcements($compatibility = null)
         }
     }
 
-    // Enable or disable jquery slidedown effect.
-
-    $slidedown = "";
-    if ($mybb->settings['bam_slidedown_enable'] == 1)
+    if (!empty($announcements))
     {
-        $slidedown = "bam_slidedown";
+        bam_headerincludes();
+
+        // Enable or disable jquery slidedown effect.
+
+        $slidedown = "";
+        if ($mybb->settings['bam_slidedown_enable'] == 1)
+        {
+            $slidedown = "bam_slidedown";
+        }
+
+        $bam_announcements = ""; // Bug fix for weird servers.
+
+        eval('$bam_announcements = "' . $templates->get('bam_announcement_container') . '";');
     }
-
-    $bam_announcements = ""; // Bug fix for weird servers.
-
-    eval('$bam_announcements = "' . $templates->get('bam_announcement_container') . '";');
     $bam_announcements = $plugins->run_hooks("bam_announcements_end", $bam_announcements);
     // Check if we are using the pre_output_page hook instead.
     // This forces announcements into the page and guesses if it can't find the variable.
@@ -573,107 +576,57 @@ function compatibility_BAM_announcements_setvariable()
     return;
 }
 
+function bam_build_css_files()
+{
+    global $mybb;
+
+    $stylesheet = @file_get_contents(__DIR__ . "/bam/bam_default.css");
+    if (!$stylesheet)
+    {
+        return false;
+    }
+
+    require_once MYBB_ROOT . $mybb->config['admin_dir'] . '/inc/functions_themes.php';
+
+    $stylesheet = trim($stylesheet);
+
+    if (!empty($mybb->settings['bam_custom_css']))
+    {
+        $stylesheet = $stylesheet . "\n" . trim($mybb->settings['bam_custom_css']);
+    }
+
+    $stylesheet_min = minify_stylesheet($stylesheet);
+
+    @file_put_contents(__DIR__ . "/bam/bam.css", $stylesheet);
+    @file_put_contents(__DIR__ . "/bam/bam.min.css", $stylesheet_min);
+
+    unset($stylesheet, $stylesheet_min);
+
+    return true;
+}
+
 function bam_headerincludes()
 {
     global $mybb, $stylesheets;
 
-    $bam_custom_css = trim($mybb->settings['bam_custom_css']);
-
-    $add_to_header = '<style type="text/css">
-    .bam_announcement.yellow {
-        background: #FFF6BF;
-        border: 1px solid #FFD324;
+    $bam_css_name = 'bam.css';
+    if ($mybb->settings['minifycss'])
+    {
+        $bam_css_name = str_replace('.css', '.min.css', $bam_css_name);
     }
 
-    .bam_announcement.green {
-        background: #D6ECA6;
-        border: 1px solid #8DC93E;
+    $bam_css_path = 'inc/plugins/bam/' . $bam_css_name;
+
+    if (file_exists(MYBB_ROOT . $bam_css_path))
+    {
+        $stylesheets .= "<link type=\"text/css\" rel=\"stylesheet\" href=\"{$mybb->settings['bburl']}/{$bam_css_path}\" />\n";
     }
 
-    .bam_announcement.orange {
-        background: #f58f10;
-        border: 1px solid #926c28;
-        color: #fff;
-    }
+    // Set some variables that we use in the javascript to create the cookies.
+    $bam_cookie_expire = (int) $mybb->settings['bam_dismissal_days'] * 24 * 60 * 60 * 1000;
+    $bam_cookie_path = $mybb->settings['cookiepath'];
 
-    .bam_announcement.blue {
-        background: #ADCBE7;
-        border: 1px solid #0F5C8E;
-    }
-
-    .bam_announcement.red {
-        background: #FBE3E4;
-        border: 1px solid #A5161A;
-    }
-
-    .bam_announcement.magenta {
-        background: #ff64a4;
-        border: 1px solid #46042f;
-        color: #ffffff;
-    }
-
-    .bam_announcement.silver {
-        background: #e9eaea;
-        border: 1px solid #8291ab;
-    }
-
-    .bam_announcement {
-        -moz-border-radius: 5px;
-        -webkit-border-radius: 5px;
-        border-radius: 5px;
-        text-align: center;
-        margin: 10px auto;
-        padding: 8px 12px;
-        background: #EBEBEB;
-        color: #000000;
-        border: 1px solid #ADADAD;
-    }
-
-    .bam_date {
-        color: #636161;
-        font-size: 0.78em;
-        margin-left: 6px;
-    }
-
-    .close_bam_announcement {
-        float:right;
-        display:inline-block;
-        padding-right: 2px;
-        padding-left: 2px;
-        margin-right: 6px;
-        font-weight: bold;
-    }
-
-    .close_bam_announcement:hover {
-        float:right;
-        display:inline-block;
-        cursor: pointer;
-        color:#000;
-    }
-
-    .bam_nodismiss {
-        display: none !important;
-    }
-
-    .bam_slidedown {
-        display: none;
-    }
-
-    .bam_round {
-        -webkit-border-radius: 20px;
-        -moz-border-radius: 20px;
-        border-radius: 20px;
-    }
-
-    .bam_wrapper {
-        width: 100%;
-        display: inline-block;
-        margin-bottom: 10px;
-    }
-
-    ' . $bam_custom_css . '
-</style>
-<script type="text/javascript">
+    $add_js_header = '<script type="text/javascript">
 <!--
     $(document).ready(function(){
         $(".bam_slidedown").delay(100).slideDown(325);
@@ -699,10 +652,10 @@ function bam_headerincludes()
         });
 
     function SetCookie(sName, sValue) {
-        document.cookie = sName + "=" + escape(sValue);
-        var date = new Date();
-        date.setTime(date.getTime() + ({$bam_cookie_expire_days} * 24 * 60 * 60 * 1000));
-        document.cookie += ("; expires=" + date.toUTCString());
+        const d = new Date();
+        d.setTime(d.getTime() + ' . $bam_cookie_expire . ');
+        let expires = "expires="+ d.toUTCString();
+        document.cookie = sName + "=" + escape(sValue) + ";" + expires + ";path=' . $bam_cookie_path . '";
     }
 
     function GetCookie(sName) {
@@ -718,7 +671,7 @@ function bam_headerincludes()
 // -->
 </script>';
 
-    $stylesheets .= $add_to_header . "\n";
+    $stylesheets .= $add_js_header . "\n";
 }
 
 function bam_parse_date($querydata)
@@ -1752,7 +1705,7 @@ function bam_confighandler(&$actions)
 
 // Legacy function that is not used in BAM 2.0. Only used if BAM 2.0 is uploaded to a server and the upgrade script has not run.
 // This allows BAM 2.0 to properly display old BAM 1 announcements before they are migrated.
-// See comments in inc/plugins/bam_upgrade/bam_upgrade.php for more info on how this works.
+// See comments in inc/plugins/bam/bam_upgrade.php for more info on how this works.
 
 function global_display($pinned)
 {
